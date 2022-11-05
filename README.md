@@ -37,3 +37,10 @@ Select some objects in a 3D view, right click anywhere in the 3D view, and use t
 
  - "Copy Disable-in-Renders to Disable-in-Viewports"
  - "Always show in viewports"
+
+## Bugs, issues, suggestions
+
+This is a quick thing that I threw together, and I haven't tested it much yet. There's not much that can go wrong, but it's possible that there are issues with it. Feel free to use the issues tab above to report any issues that you find with this add-on. I can't prommise to fix anything quickly, but please do submit reports anyway :)
+
+Thanks.
+
