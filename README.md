@@ -37,7 +37,7 @@ Select some objects in a 3D view, right click anywhere in the 3D view, and use t
 
  - "Copy Disable-in-Renders to Disable-in-Viewports" <- operates on the selection[1]
  - "Always show in viewports" <- operates on the selection[1]
- - "Always show ALL in viewports" <- operates on all objects in the scene
+ - "Always show ALL objects in viewports" <- operates on all objects in the scene
 
 ## Bugs, issues, suggestions
 
