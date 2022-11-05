@@ -31,6 +31,7 @@ class ViewportsHideOp(bpy.types.Operator):
         
     def execute(self, context):
         for o in context.selected_objects:
+            o.hide_viewport = False
             if o.animation_data is None:
                 continue
             if o.animation_data.action is None:
@@ -54,39 +55,56 @@ class ViewportsHideOp(bpy.types.Operator):
                     f.easing = p.easing
                     f.back = p.back
                     f.interpolation = p.interpolation
+            o.hide_viewport = o.hide_render
         return {'FINISHED'}
     
+def show_objects(objs):
+    for o in objs:
+        o.hide_viewport = False
+        if o.animation_data is None:
+            continue
+        if o.animation_data.action is None:
+            continue
+        curves = o.animation_data.action.fcurves
+        if curves is None:
+            continue
+        hide_viewport = curves.find('hide_viewport')
+        if hide_viewport is not None:
+            curves.remove(hide_viewport)
+
 class ViewportsShowAlways(bpy.types.Operator):
     bl_idname = "wm.always_show_in_viewport"
     bl_label = "Always show in viewports"
         
     def execute(self, context):
-        for o in context.selected_objects:
-            if o.animation_data is None:
-                continue
-            if o.animation_data.action is None:
-                continue
-            curves = o.animation_data.action.fcurves
-            if curves is None:
-                continue
-            hide_viewport = curves.find('hide_viewport')
-            if hide_viewport is not None:
-                curves.remove(hide_viewport)
+        show_objects(context.selected_objects)
         return {'FINISHED'}
+
+class ViewportsShowAllAlways(bpy.types.Operator):
+    bl_idname = "wm.always_show_all_in_viewport"
+    bl_label = "Always show ALL objects in viewports"
         
+    def execute(self, context):
+        show_objects(context.scene.objects)
+        return {'FINISHED'}
             
 def menu_func(self, context):
     self.layout.separator()
     self.layout.operator(ViewportsHideOp.bl_idname, text=ViewportsHideOp.bl_label)
     self.layout.operator(ViewportsShowAlways.bl_idname, text=ViewportsShowAlways.bl_label)
+    self.layout.operator(ViewportsShowAllAlways.bl_idname, text=ViewportsShowAllAlways.bl_label)
     
 def register():
     bpy.utils.register_class(ViewportsHideOp)
     bpy.utils.register_class(ViewportsShowAlways)
+    bpy.utils.register_class(ViewportsShowAllAlways)
     bpy.types.VIEW3D_MT_object_context_menu.append(menu_func)
+    bpy.types.OUTLINER_MT_object.append(menu_func)
     
 def unregister():
+    bpy.types.OUTLINER_MT_object.remove(menu_func)
     bpy.types.VIEW3D_MT_object_context_menu.remove(menu_func)
+    bpy.utils.unregister_class(ViewportsShowAllAlways)
     bpy.utils.unregister_class(ViewportsShowAlways)
     bpy.utils.unregister_class(ViewportsHideOp)
     
