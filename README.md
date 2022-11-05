@@ -12,7 +12,7 @@ This plugin partially solves this problem (while we wait for blender to implemen
 
 ## What you get
 
-These two buttons are added to the 3D view context menu:
+These three buttons are added to the 3D view context menu:
 
 ![blender's 3D view context menu, showing two new items at the bottom, as added by this add-on](screenshot.png)
 
@@ -35,8 +35,9 @@ Choosing "Always show in viewports" simply deletes the f-curve for "Disable in V
 
 Select some objects in a 3D view, right click anywhere in the 3D view, and use the two new menu options:
 
- - "Copy Disable-in-Renders to Disable-in-Viewports"
- - "Always show in viewports"
+ - "Copy Disable-in-Renders to Disable-in-Viewports" <- operates on the selection[1]
+ - "Always show in viewports" <- operates on the selection[1]
+ - "Always show ALL in viewports" <- operates on all objects in the scene
 
 ## Bugs, issues, suggestions
 
@@ -44,3 +45,6 @@ This is a quick thing that I threw together, and I haven't tested it much yet. T
 
 Thanks.
 
+## Gotchas
+
+[1] Even if an object is selected, these operations will not do anything if the object is disabled in the viewport. This is a side effect of a deliberate part of the blender UX design that prevents operators from changing things about objects that cannot be seen by the user right now. This is expected, but sometimes not desirable. To make sure this operator works on a specific object you need to make sure you unhide that object in viewports. Alternatively, you can use "Always show ALL in viewports" to bring make all operations work on all objects again.
