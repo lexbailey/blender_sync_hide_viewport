@@ -12,7 +12,7 @@ This plugin partially solves this problem (while we wait for blender to implemen
 
 ## What you get
 
-These three buttons are added to the 3D view context menu:
+These three buttons are added to the Object context menu:
 
 ![blender's 3D view context menu, showing two new items at the bottom, as added by this add-on](screenshot.png)
 
