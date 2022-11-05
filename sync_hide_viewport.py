@@ -62,7 +62,13 @@ class ViewportsShowAlways(bpy.types.Operator):
         
     def execute(self, context):
         for o in context.selected_objects:
+            if o.animation_data is None:
+                continue
+            if o.animation_data.action is None:
+                continue
             curves = o.animation_data.action.fcurves
+            if curves is None:
+                continue
             hide_viewport = curves.find('hide_viewport')
             if hide_viewport is not None:
                 curves.remove(hide_viewport)
